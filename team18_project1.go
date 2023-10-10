@@ -51,6 +51,7 @@ func main() {
 		var rm string
 		var rn string
 		var rd string
+		var shamt string
 
 		if i, err := strconv.ParseInt(op, 2, 64); err != nil {
 			fmt.Println(err)
@@ -68,6 +69,7 @@ func main() {
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
 			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
+
 		} else if opcode == "1112" {
 			instruct = "ADD"
 			rm = argConv(line[11:16])
@@ -76,9 +78,11 @@ func main() {
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
 			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
+
 		} else if opcode == "1160" || opcode == "1161" {
 			instruct = "ADDI"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1360" {
 			instruct = "ORR"
 			rm = argConv(line[11:16])
@@ -87,12 +91,15 @@ func main() {
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
 			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
+
 		} else if opcode == "1440" || opcode == "1447" {
 			instruct = "CBZ"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1448" || opcode == "1455" {
 			instruct = "CBNZ"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1624" {
 			instruct = "SUB"
 			rm = argConv(line[11:16])
@@ -101,38 +108,46 @@ func main() {
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
 			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
+
 		} else if opcode == "1672" || opcode == "1673" {
 			instruct = "SUBI"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1684" || opcode == "1687" {
 			instruct = "MOVZ"
 
 			//fmt.Println(opcode)
+
 		} else if opcode == "1940" || opcode == "1943" {
 			instruct = "MOVK"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1690" {
 			instruct = "LSR"
-			rm = argConv(line[11:16])
+			shamt = argConv(line[16:22])
 			rn = argConv(line[22:27])
 			rd = argConv(line[27:32])
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
-			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", #")
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", #" + shamt)
+
 		} else if opcode == "1691" {
 			instruct = "LSL"
-			rm = argConv(line[11:16])
+			shamt = argConv(line[16:22])
 			rn = argConv(line[22:27])
 			rd = argConv(line[27:32])
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
-			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", #")
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", #" + shamt)
+
 		} else if opcode == "1984" {
 			instruct = "STUR"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1986" {
 			instruct = "LDUR"
 			//fmt.Println(opcode)
+
 		} else if opcode == "1692" {
 			instruct = "ASR"
 			rm = argConv(line[11:16])
@@ -141,6 +156,7 @@ func main() {
 
 			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
 			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
+
 		} else if opcode == "1872" {
 			instruct = "EOR"
 			rm = argConv(line[11:16])
