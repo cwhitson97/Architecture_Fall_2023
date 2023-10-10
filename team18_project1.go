@@ -8,6 +8,18 @@ import (
 	"strconv"
 )
 
+func argConv(rm string) string {
+	var newRm string
+
+	if i, err := strconv.ParseInt(rm, 2, 64); err != nil {
+		fmt.Println(err)
+	} else {
+		newRm = strconv.Itoa(int(i))
+	}
+
+	return newRm
+}
+
 func main() {
 	var address = 96
 
@@ -33,9 +45,12 @@ func main() {
 	for _, line := range instructions {
 
 		var op = line[0:11]
+		var strAddress string
 		var opcode string
 		var instruct string
 		var rm string
+		var rn string
+		var rd string
 
 		if i, err := strconv.ParseInt(op, 2, 64); err != nil {
 			fmt.Println(err)
@@ -43,20 +58,35 @@ func main() {
 			opcode = strconv.Itoa(int(i))
 		}
 
-		fmt.Println(opcode)
+		strAddress = strconv.Itoa(address)
 
 		if opcode == "1104" {
 			instruct = "AND"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
 		} else if opcode == "1112" {
 			instruct = "ADD"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
 		} else if opcode == "1160" || opcode == "1161" {
 			instruct = "ADDI"
 			//fmt.Println(opcode)
 		} else if opcode == "1360" {
 			instruct = "ORR"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
 		} else if opcode == "1440" || opcode == "1447" {
 			instruct = "CBZ"
 			//fmt.Println(opcode)
@@ -65,7 +95,12 @@ func main() {
 			//fmt.Println(opcode)
 		} else if opcode == "1624" {
 			instruct = "SUB"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
 		} else if opcode == "1672" || opcode == "1673" {
 			instruct = "SUBI"
 			//fmt.Println(opcode)
@@ -78,10 +113,20 @@ func main() {
 			//fmt.Println(opcode)
 		} else if opcode == "1690" {
 			instruct = "LSR"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", #")
 		} else if opcode == "1691" {
 			instruct = "LSL"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", #")
 		} else if opcode == "1984" {
 			instruct = "STUR"
 			//fmt.Println(opcode)
@@ -90,13 +135,21 @@ func main() {
 			//fmt.Println(opcode)
 		} else if opcode == "1692" {
 			instruct = "ASR"
-			//fmt.Println(opcode)
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
+
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
 		} else if opcode == "1872" {
 			instruct = "EOR"
-			//fmt.Println(opcode)
-		}
+			rm = argConv(line[11:16])
+			rn = argConv(line[22:27])
+			rd = argConv(line[27:32])
 
-		fmt.Println(op + "\t" + strconv.Itoa(address) + "\t" + instruct + "\tR" + rm)
+			var toPrint = fmt.Sprintf("%.11s %.5s %.6s %.5s %.5s", line[0:11], line[11:16], line[16:22], line[22:27], line[27:32])
+			fmt.Println(toPrint + "\t" + strAddress + "\t" + instruct + "\tR" + rd + ", R" + rn + ", R" + rm)
+		}
 
 		address = address + 4
 	}
